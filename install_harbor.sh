@@ -19,7 +19,22 @@ cp docker-compose-Linux-x86_64 /usr/local/bin/docker-compose
 
 docker-compose -v
 if [ $? -eq 0 ]
-    echo ""
+    echo "docker-compose安装完成，开始安装harbor"
+else
+    echo "请检查环境。docker-compose安装失败"
+    exit 1
 
 fi
+
+
+
+
+
+
+
+
+
+
+
+
 
