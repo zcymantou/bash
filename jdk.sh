@@ -29,13 +29,13 @@ else
     mkdir -pv $JDKDIR
     tar -xvf $SOFTDR/$VERSION -C $JDKDIR >/dev/null
     $GREEN"开始配置jdk环境变量"$END
-    ln -s  /usr/local/java/jdk1.8.0_171    /opt/javaLastVer
+    ln -s  /usr/local/java/jdk1.8.0_171    /opt/jdk1.8_171
     sudo cat > /etc/profile.d/java.sh <<EOF
 export JAVA_HOME=/opt/jdk1.8_171
 export PATH=$JAVA_HOME/bin:$PATH
 export JAVA_HOME PATH
 EOF
-#    source /etc/profile.d/java.sh
+    source /etc/profile.d/java.sh
     $GREEN"请手动执行：source /etc/profile.d/java.sh加载环境变量....."$END
     sleep 15s
     java -version
