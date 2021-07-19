@@ -6,7 +6,7 @@
 #Date:              2021-07-15
 #FileName：         copy_auto.sh
 #URL:               http://
-#Description：      批量实现ssh配置，前提是所以服务器密码都是一样的.提前配置好ssh服务
+#Description：      批量实现ssh公钥配置，前提是所以服务器密码都是一样的.提前配置好ssh服务
 #Copyright (C):    2021 All rights reserved
 #********************************************************************
 RED='echo -e \033[031m'
