@@ -15,14 +15,11 @@ YELLOW='echo -e \033[033m'
 BLUE='echo -e \033[036m'
 END='\033[0m'
 
-IPLIST="10.0.0.1
-10.0.0.2
-10.0.0.3
-10.0.0.4
-10.0.0.5"
+IPLIST="10.0.0.8
+10.0.0.9"
+rpm -ql sshpass || yum install -y sshpass
 #设置需要配置的远程服务器的登录用户密码
-export SSHPASS=12345
+export SSHPASS=282013
 for IP in $IPLIST;do
-    sshpass -e ssh-copy-id $ip
+    sshpass -e ssh-copy-id -o StrictHostkeyChecking=no  $IP
 done
-    
