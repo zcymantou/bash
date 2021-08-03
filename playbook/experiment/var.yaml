@@ -1,0 +1,12 @@
+---
+- hosts: web1
+  remote_user: root
+  gather_facts: yes
+  
+  vars:
+    filename: test1.sh
+
+  tasks:
+    - name: touch file
+      file: name=/opt/{{ filename }}.log state=touch
+
