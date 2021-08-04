@@ -1,0 +1,7 @@
+---
+- hosts: web1
+  remote_user: root
+  gather_facts: yes
+  tasks:
+    - name: use template copy file
+      template: src=nginx.conf dest=/opt/ 

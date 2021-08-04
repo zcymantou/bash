@@ -1,0 +1,10 @@
+---
+- hosts: web1
+  remote_user: root
+  tasks:
+    - name: test when
+      service: name=httpd state=stopped
+      when: (ansible_facts['distribution']== "CentOS" and ansible_facts['distribution_major_version'] == "7") or (ansible_facts['distribution'] == "Debain") 
+#      when: 
+#        - ansible_facts['distribution'] == "CentOS" 
+#        - ansible_facts['distribution_major_version'] == "7"

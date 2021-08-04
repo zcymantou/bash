@@ -1,0 +1,55 @@
+---
+- hosts: redis-cluster
+  remote_user: root
+  
+  tasks:
+    - name: install
+      yum: 
+        name:
+         - gcc
+         - gcc*
+         - zlib-devel
+         - openssl-devel
+         - wget  
+#       stata: present
+    - name: mkdir file
+      file: path={{ item }}  state=directory
+      with_items:
+        - /opt/soft
+        - /opt/redis_data
+        - /usr/local/redis/cluster
+        - /opt/redis_data/9001
+        - /opt/redis_data/9002
+        - /opt/redis_data/9003
+        - /opt/redis_data/9004
+        - /opt/redis_data/9005
+        - /opt/redis_data/9006
+#        - { dir='/opt/redis_data', filename='9002' }
+    - name: copy config file
+      template: src=redis.conf.j2 dest=/usr/local/redis/cluster/redis{{ item }}.conf
+      with_items:
+        - 9001
+        - 9002
+        - 9003
+        - 9004
+        - 9005
+        - 9006
+    - name: 修改内核
+      shell: sh -c "echo 'vm.overcommit_memory = 1' >> /etc/security/limits.conf " ;sh -c "echo 'net.core.somaxconn= 1024' >> /etc/security/limits.conf ";sh -c "echo '* soft nofile 65536' >>  /etc/security/limits.d/20-nproc.conf";sh -c "echo '* hard nofile 65536' >>  /etc/security/limits.d/20-nproc.conf";sh -c "echo '* soft nproc 65536 ' >>  /etc/security/limits.d/20-nproc.conf";sh -c "echo '* hard nproc 65536 ' >>  /etc/security/limits.d/20-nproc.conf";sh -c "echo 'vm.max_map_count = 655360' >> /etc/security/limits.conf " && sysctl -p
+      tags: change kennel
+    - name: 复制安装包到远程,注意自己的软件包所在路径
+      unarchive: src={{ item }} dest=/opt/soft
+      with_items:
+        - /root/ansible/redis-4.0.14.tar.gz
+        - /root/ansible/ruby-2.3.1.tar.gz
+    - name: install redis
+      shell: cd /opt/soft/redis-4.0.14/ ; make -j {{ ansible_processor_vcpus  }} && make install 
+  
+    - name: manager install ruby env
+      shell: cd /opt/soft/ruby-2.3.1/;./configure --prefix=/usr/local/ruby ; make -j {{ ansible_processor_vcpus  }} && make install && echo "环境设置" && echo "RUBY_HOME=\'/usr/local/ruby\'" >>/etc/profile.d/ruby.sh && echo 'PATH=$PATH:$RUBY_HOME/bin' >>/etc/profile.d/ruby.sh && echo 'export RUBY_HOME PATH' >>/etc/profile.d/ruby.sh && source /etc/profile.d/ruby.sh && sudo env PATH=$PATH gem install redis -v 4.1.2
+      when: role == "manger"
+      tags: ruby
+
+    - name: 复制ruby的redis文件
+      template: src=client.rb.j2 dest=/usr/local/ruby/lib/ruby/gems/2.3.0/gems/redis-4.1.2/lib/redis/client.rb
+
