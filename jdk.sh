@@ -40,7 +40,7 @@ EOF
     sleep 15s
     java -version
     if [ $? -eq 0 ];then
-        $GREEND"java 安装完成"$END
+        $GREEN"java 安装完成"$END
     else
         $RED"java安装失败，请查看错误,或者执行上述操作"$END
         exit 1;
