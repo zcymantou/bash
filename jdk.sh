@@ -27,7 +27,7 @@ if [ $? -eq 0 ];then
 else
     $YELLOW"创建安装目录"$END
     mkdir -pv $JDKDIR
-    tar -xvf $SOFTDR/$VERSION -C $JDKDIR >/dev/null
+    tar -xvf $SOFTDIR/$VERSION -C $JDKDIR >/dev/null
     $GREEN"开始配置jdk环境变量"$END
     ln -s  /usr/local/java/jdk1.8.0_171    /opt/jdk1.8_171
     sudo cat > /etc/profile.d/java.sh <<EOF
