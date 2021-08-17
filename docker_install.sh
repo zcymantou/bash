@@ -50,15 +50,20 @@ EOF
 }
 
 ubuntu () {
+    rm /var/lib/dpkg/lock-frontend
+    rm /var/lib/dpkg/lock
+    docker_version="5:19.03.5~3-0~ubuntu-bionic"
     echo "安装相关依赖"
-    sudo apt install -y apt-trabsport-https ca-certificates curl software-properties-common >/dev/null
+    sudo apt install -y apt-transport-https ca-certificates curl software-properties-common >/dev/null
     [ $? -eq 0 ] && echo "依赖安转完成" ||echo "安装失败，请检查环境配置"
     echo "开始安装GPG证书"
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 
     sudo add-apt-repository "deb [arch=amd64] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
     sudo apt-get update
-    sudo apt-get install docker-ce=${docker_version} docker-ce=cli-${docker_version}
+    rm /var/lib/dpkg/lock-frontend
+    rm /var/lib/dpkg/lock 
+    sudo apt-get install -y docker-ce=${docker_version} docker-ce-cli=${docker_version}
      ${green}"开始添加镜像加速"${end}
     sudo mkdir -p /etc/docker
     cat > /etc/docker/daemon.json <<EOF
@@ -66,7 +71,7 @@ ubuntu () {
         "registry-mirrors": ["https://si7y70hh.mirrir.aliyuncs.com"]
      }
 EOF
-
+   systemctl enable --now docker
 }
 
 case $os_type in
