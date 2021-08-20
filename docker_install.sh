@@ -35,6 +35,7 @@ centos () {
     #sudo yum-config-manager --add-repo https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/centos/docker-ce.repo
 #    sudo yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
     sudo wget -P  /etc/yum.repos.d/ https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/centos/docker-ce.repo
+    sudo sed -i 's+download.docker.com+mirrors.tuna.tsinghua.edu.cn/docker-ce+' /etc/yum.repos.d/docker-ce.repo
     sudo yum clean all
     sudo yum install -y docker-ce-${docker_version} docker-ce-cli-${docker_version} || ${red}"安装失败"${end} && exit 1 
  #   sudo yum install http://mirror.centos.org/centos/7/extras/x86_64/Packages/container-selinux-2.119.1-1.c57a6f9.el7.noarch.rpm
