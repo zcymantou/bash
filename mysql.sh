@@ -71,7 +71,7 @@ source /etc/profile.d/mysql.sh
 
 install_mysql57 () {
 sudo yum install -y libaio numactl-libs
-${gree}"开始下载${version}-${low_version}"${end}
+${green}"开始下载${version}-${low_version}"${end}
     cd ${appsoft}
     if [ -e mysql-${low_version}-linux-glibc2.12-x86_64.tar.gz ];then 
         ${green}"安装包已经存在"${end}
