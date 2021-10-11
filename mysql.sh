@@ -88,6 +88,25 @@ ${green}"开始下载${version}-${low_version}"${end}
     cd /usr/local
     ln -sv mysql-${low_version}-linux-glibc2.12-x86_64 mysql
     chown -R mysql.mysql mysql
+    [ -e /etc/my.cnf ] && rm -f /etc/my.cnf
+    cat >/etc/my.cnf<EOF
+[mysqld]
+datadir=/data/mysql
+skip_name_resolve=1 
+server_id=1
+log_bin
+socket=/data/mysql/mysql.sock
+log-error=/data/mysql/mysql.log
+pid-file=/data/mysql/mysql.pid
+character-set-server=utf8mb4
+max_connections=2000
+#gtid_mode=on
+#enforce_gtid_consistency
+[client]
+socket=/data/mysql/mysql.sock
+[mysql]
+default-character-set=utf8mb4
+EOF
     ${green}"程序目录准备完成，开始进行数据库初始化...."${end}
     /usr/local/mysql/bin/mysqld --initialize --user=mysql  --datadir=${datafile} --basedir=/usr/local/mysql
     sudo cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysqld
@@ -101,7 +120,7 @@ EOF
    #echo ""
    
    old_pwd=`sed -nr 's/.*(root@localhost: )(.*)/\2/p' /data/mysql/mysql.log`
-   
+   echo "$old_pwd"
    ${red}"注意查看初始密码，手动初始化root用户密码....."
    mysqladmin -uroot -p"$old_pwd" password 12345678
 }
