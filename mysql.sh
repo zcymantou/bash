@@ -89,7 +89,7 @@ ${green}"开始下载${version}-${low_version}"${end}
     ln -sv mysql-${low_version}-linux-glibc2.12-x86_64 mysql
     chown -R mysql.mysql mysql
     [ -e /etc/my.cnf ] && rm -f /etc/my.cnf
-    cat >/etc/my.cnf<EOF
+    cat >> /etc/my.cnf <<EOF
 [mysqld]
 datadir=/data/mysql
 skip_name_resolve=1 
