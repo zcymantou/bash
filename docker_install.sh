@@ -45,7 +45,11 @@ centos () {
     sudo mkdir -p /etc/docker
     cat > /etc/docker/daemon.json <<EOF
      {
-        "registry-mirrors": ["https://si7y70hh.mirrir.aliyuncs.com"]
+        "registry-mirrors": ["https://si7y70hh.mirrir.aliyuncs.com"],
+        "exec-opts": ["native.cgroupdriver=systemd"],
+        "live-restore": true
+         
+         
      }
 EOF
 }
