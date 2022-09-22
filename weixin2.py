@@ -17,12 +17,12 @@ subject="每日跑批完成情况:"
 #user='zcy261'
 
 
-   # URL = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=a94e8b08-e212-4a54-bb12-8ba687b7d3a4"
+   # URL = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=xxxxxxx"
 def SendMessageURL(User:str,Subject,Messages):
     #webhook换成你机器人的key
     #处理传入的用户id
     user_list = ['<@{}>'.format(user) for user in User.split(";")]
-    URL = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=ae9c8197-4e76-4cb2-ab98-5f0b500569bb"
+    URL = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=xxxxxxxxx"
     HEADERS = {"Content-Type": "application/json"}
     Data = {
         "msgtype": "markdown",
